@@ -1,0 +1,46 @@
+#######################################
+# Syntax Coloring Map For LTC2942
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+LTC2942	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+startMeasurement	KEYWORD2
+stopMeasurement	KEYWORD2
+getStatus	KEYWORD2
+getRawAccumulatedCharge	KEYWORD2
+getRemainingCapacity	KEYWORD2
+getVoltage	KEYWORD2
+getTemperature	KEYWORD2
+setADCMode	KEYWORD2
+setPrescalerM	KEYWORD2
+setBatteryCapacity	KEYWORD2
+setBatteryToFull	KEYWORD2
+setChargeThresholds	KEYWORD2
+setVoltageThresholds	KEYWORD2
+setTemperatureThresholds	KEYWORD2
+configureALCC	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+ADC_MODE_AUTO	LITERAL1
+ADC_MODE_MANUAL_VOLTAGE	LITERAL1
+ADC_MODE_MANUAL_TEMP	LITERAL1
+ADC_MODE_SLEEP	LITERAL1
+ALCC_MODE_ALERT	LITERAL1
+ALCC_MODE_CHG_COMPLETE	LITERAL1
+ALCC_MODE_DISABLED	LITERAL1
