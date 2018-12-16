@@ -124,6 +124,10 @@ void LTC2942::setBatteryToFull() {
 	writeWordToRegisters(REG_C_ACC_CHG_MSB, 0xFFFF);
 }
 
+void LTC2942::setRawAccumulatedCharge(uint16_t charge) {
+	writeWordToRegisters(REG_C_ACC_CHG_MSB, charge);
+}
+
 void LTC2942::setChargeThresholds(uint16_t high, uint16_t low) {
 	writeWordToRegisters(REG_E_CHG_THR_H_MSB, high);
 	writeWordToRegisters(REG_G_CHG_THR_L_MSB, low);

@@ -82,6 +82,7 @@ class LTC2942 {
 		void setPrescalerM(uint8_t m);
 		void setBatteryCapacity(uint16_t mAh);
 		void setBatteryToFull();
+		void setRawAccumulatedCharge(uint16_t charge);
 		void setChargeThresholds(uint16_t high, uint16_t low);
 		void setVoltageThresholds(float high, float low);
 		void setTemperatureThresholds(float high, float low);
