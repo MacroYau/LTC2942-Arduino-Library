@@ -24,7 +24,7 @@ setADCMode	KEYWORD2
 setPrescalerM	KEYWORD2
 setBatteryCapacity	KEYWORD2
 setBatteryToFull	KEYWORD2
-setRawAccumulatedCharge KEYWORD2
+setRawAccumulatedCharge	KEYWORD2
 setChargeThresholds	KEYWORD2
 setVoltageThresholds	KEYWORD2
 setTemperatureThresholds	KEYWORD2
