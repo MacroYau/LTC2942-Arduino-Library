@@ -1,12 +1,13 @@
 /*
-	LTC2942 Battery Readings Example
+  LTC2941 and LTC2942 Battery Readings Example
 
   Reads the accumulated charge, remaining capacity, voltage, and temperature of 
-  a battery gauged by a LTC2942 device connected to an Arduino board via I2C.
+  a battery gauged by a LTC2941 or LTC2942 device connected to an Arduino board 
+  via I2C.
 	
-	Copyright (c) 2018 Macro Yau
+  Copyright (c) 2020 Macro Yau
 
-	https://github.com/MacroYau/LTC2942-Arduino-Library
+  https://github.com/MacroYau/LTC2942-Arduino-Library
 */
 
 #include <LTC2942.h>
@@ -17,15 +18,19 @@ LTC2942 gauge(50); // Takes R_SENSE value (in milliohms) as constructor argument
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("LTC2942 Battery Readings Example");
+  Serial.println("Battery Readings Example");
   Serial.println();
 
   Wire.begin();
 
   while (gauge.begin() == false) {
-    Serial.println("Failed to detect LTC2942!");
+    Serial.println("Failed to detect LTC2941 or LTC2942!");
     delay(5000);
   }
+
+  unsigned int model = gauge.getChipModel();
+  Serial.print("Detected LTC");
+  Serial.println(model);
 
   gauge.setBatteryCapacity(fullCapacity);
   gauge.setBatteryToFull(); // Sets accumulated charge registers to the maximum value
@@ -47,13 +52,21 @@ void loop() {
 
   float voltage = gauge.getVoltage();
   Serial.print(F("Voltage: "));
-  Serial.print(voltage, 3);
-  Serial.println(F(" V"));
+  if (voltage >= 0) {
+    Serial.print(voltage, 3);
+    Serial.println(F(" V"));
+  } else {
+    Serial.println(F("Not supported by LTC2941"));
+  }
 
   float temperature = gauge.getTemperature();
   Serial.print(F("Temperature: "));
-  Serial.print(temperature, 2);
-  Serial.println(F(" 'C"));
+  if (temperature >= 0) {
+    Serial.print(temperature, 2);
+    Serial.println(F(" 'C"));
+  } else {
+    Serial.println(F("Not supported by LTC2941"));
+  }
 
   Serial.println();
 

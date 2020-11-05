@@ -1,7 +1,7 @@
 /*
-	Arduino Library for LTC2942
+	Arduino Library for LTC2941 and LTC2942
 	
-	Copyright (c) 2018 Macro Yau
+	Copyright (c) 2020 Macro Yau
 
 	https://github.com/MacroYau/LTC2942-Arduino-Library
 */
@@ -20,11 +20,19 @@ bool LTC2942::begin(TwoWire &wirePort) {
 
 	// Checks device ID
 	uint8_t chipID = getStatus() >> A_CHIP_ID_OFFSET;
-	if (chipID != CHIP_ID_LTC2942) {
+	if (chipID == CHIP_ID_LTC2942) {
+		_chipModel = 42;
+	} else if (chipID == CHIP_ID_LTC2941) {
+		_chipModel = 41;
+	} else {
 		return false;
 	}
 
 	return true;
+}
+
+uint16_t LTC2942::getChipModel() {
+	return 2900 + _chipModel;
 }
 
 void LTC2942::startMeasurement() {
@@ -63,6 +71,10 @@ float LTC2942::getRemainingCapacity() {
 }
 
 float LTC2942::getVoltage(bool oneShot) {
+	if (_chipModel != 42) {
+		return -1;
+	}
+
 	if (oneShot) {
 		setADCMode(ADC_MODE_MANUAL_VOLTAGE);
 		delay(10);
@@ -72,6 +84,10 @@ float LTC2942::getVoltage(bool oneShot) {
 }
 
 float LTC2942::getTemperature(bool oneShot) {
+	if (_chipModel != 42) {
+		return -1;
+	}
+
 	if (oneShot) {
 		setADCMode(ADC_MODE_MANUAL_TEMP);
 		delay(10);
@@ -81,6 +97,10 @@ float LTC2942::getTemperature(bool oneShot) {
 }
 
 void LTC2942::setADCMode(uint8_t mode) {
+	if (_chipModel != 42) {
+		return;
+	}
+
 	if (mode > 0b11) {
 		return;
 	}
@@ -134,11 +154,19 @@ void LTC2942::setChargeThresholds(uint16_t high, uint16_t low) {
 }
 
 void LTC2942::setVoltageThresholds(float high, float low) {
+	if (_chipModel != 42) {
+		return;
+	}
+
 	writeByteToRegister(REG_K_VOLTAGE_THR_H, (uint8_t) (high / 0.0234375));
 	writeByteToRegister(REG_L_VOLTAGE_THR_L, (uint8_t) (low / 0.0234375));
 }
 
 void LTC2942::setTemperatureThresholds(float high, float low) {
+	if (_chipModel != 42) {
+		return;
+	}
+
 	writeByteToRegister(REG_M_TEMP_MSB, (uint8_t) ((high + 273) / 2.34375));
 	writeByteToRegister(REG_N_TEMP_LSB, (uint8_t) ((low + 273) / 2.34375));
 }

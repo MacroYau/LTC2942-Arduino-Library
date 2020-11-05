@@ -1,7 +1,7 @@
 /*
-	Arduino Library for LTC2942
+	Arduino Library for LTC2941 and LTC2942
 	
-	Copyright (c) 2018 Macro Yau
+	Copyright (c) 2020 Macro Yau
 
 	https://github.com/MacroYau/LTC2942-Arduino-Library
 */
@@ -24,14 +24,14 @@
 #define REG_F_CHG_THR_H_LSB		0x05 // Charge Threshold High LSB (R/W)
 #define REG_G_CHG_THR_L_MSB		0x06 // Charge Threshold Low MSB (R/W)
 #define REG_H_CHG_THR_L_LSB		0x07 // Charge Threshold Low LSB (R/W)
-#define REG_I_VOLTAGE_MSB		0x08 // Voltage MSB (R)
-#define REG_J_VOLTAGE_LSB		0x09 // Voltage LSB (R)
-#define REG_K_VOLTAGE_THR_H		0x0A // Voltage Threshold High (R/W)
-#define REG_L_VOLTAGE_THR_L		0x0B // Voltage Threshold Low (R/W)
-#define REG_M_TEMP_MSB			0x0C // Temperature MSB (R)
-#define REG_N_TEMP_LSB			0x0D // Temperature LSB (R)
-#define REG_O_TEMP_THR_H		0x0E // Temperature Threshold High (R/W)
-#define REG_P_TEMP_THR_L		0x0F // Temperature Threshold Low (R/W)
+#define REG_I_VOLTAGE_MSB		0x08 // Voltage MSB (R); LTC2942 only
+#define REG_J_VOLTAGE_LSB		0x09 // Voltage LSB (R); LTC2942 only
+#define REG_K_VOLTAGE_THR_H		0x0A // Voltage Threshold High (R/W); LTC2942 only
+#define REG_L_VOLTAGE_THR_L		0x0B // Voltage Threshold Low (R/W); LTC2942 only
+#define REG_M_TEMP_MSB			0x0C // Temperature MSB (R); LTC2942 only
+#define REG_N_TEMP_LSB			0x0D // Temperature LSB (R); LTC2942 only
+#define REG_O_TEMP_THR_H		0x0E // Temperature Threshold High (R/W); LTC2942 only
+#define REG_P_TEMP_THR_L		0x0F // Temperature Threshold Low (R/W); LTC2942 only
 
 /* Status Register (A) */
 
@@ -71,6 +71,7 @@ class LTC2942 {
 	public:
 		LTC2942(uint8_t rSense = 50);
 		bool begin(TwoWire &wirePort = Wire);
+		uint16_t getChipModel();
 		void startMeasurement();
 		void stopMeasurement();
 		uint8_t getStatus();
@@ -94,6 +95,7 @@ class LTC2942 {
 		uint8_t readByteFromRegister(uint8_t address);
 		bool writeByteToRegister(uint8_t address, uint8_t value);
 	private:
+		uint8_t _chipModel;
 		uint8_t _rSense;
 		uint8_t _prescalerM;
 		uint16_t _batteryCapacity;
