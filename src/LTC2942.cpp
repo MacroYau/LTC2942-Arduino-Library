@@ -65,7 +65,7 @@ uint16_t LTC2942::getRawAccumulatedCharge() {
 
 float LTC2942::getRemainingCapacity() {
 	uint16_t acr = getRawAccumulatedCharge();
-	float fullRange = 65536 * ((float) _prescalerM / 128) * 0.085 * ((float) 50 / _rSense);
+	float fullRange = 65535 * ((float) _prescalerM / 128) * 0.085 * ((float) 50 / _rSense);
 	float offset = fullRange - _batteryCapacity;
 	return (acr * ((float) _prescalerM / 128) * 0.085 * ((float) 50 / _rSense)) - offset; // mAh
 }
