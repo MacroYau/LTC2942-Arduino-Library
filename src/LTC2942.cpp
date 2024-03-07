@@ -183,6 +183,7 @@ void LTC2942::configureALCC(uint8_t mode) {
 }
 
 uint8_t LTC2942::findExponentOfPowerOfTwo(uint8_t value) {
+	// value is expected to be a power of 2
 	if (value > 64) {
 		return 7;
 	}
@@ -192,6 +193,9 @@ uint8_t LTC2942::findExponentOfPowerOfTwo(uint8_t value) {
 			return i;
 		}
 	}
+
+	// if value = 0 we still must return something to avoid a compiler error
+	return 0;
 }
 
 uint8_t LTC2942::roundUpToPowerOfTwo(uint8_t value) {
